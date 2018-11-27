@@ -1,5 +1,5 @@
 const {deepEqual} = require("assert");
-const { extractCellStatus, initCells, modifyStatus } = require("../src/library.js");
+const { initCells, modifyStatus, extractCellStatus, extractAdjoinCells } = require("../src/library.js");
 
 describe('initCells', function() {
   it('should return array matrix filled with D', function() {
@@ -34,5 +34,15 @@ describe("extractCellStatus", function() {
     deepEqual(extractCellStatus([["L","D"]],[[0,0]]), ["L"]);
     deepEqual(extractCellStatus([["L","D"]],[[0,1]]), ["D"]);
     deepEqual(extractCellStatus([["L","D"],["D","L"]],[[0,1],[1,0]]), ["D","D"]);
+  });
+});
+
+describe("extractAdjoinCells", function() {
+  it('it Should return adjoin cells of given position', function() {
+    deepEqual(extractAdjoinCells([1,0]), [[0,0],[0,1],[1,1],[2,0],[2,1]]);
+    deepEqual(extractAdjoinCells([1,1]), [[0,0],[0,1],[0,2],[1,0],[1,2],[2,0],[2,1],[2,2]]);
+    deepEqual(extractAdjoinCells([0,1]), [[0,0],[0,2],[1,0],[1,1],[1,2]]);
+    deepEqual(extractAdjoinCells([0,0]), [[0,1],[1,0],[1,1]]);
+    deepEqual(extractAdjoinCells([3,0]), [[2,0],[2,1],[3,1],[4,0],[4,1]]);
   });
 });
