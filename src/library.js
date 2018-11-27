@@ -7,5 +7,9 @@ const modifyStatus = function(currentStatus, positions){
   return currentStatus;
 }
 
-module.exports = {initCells, modifyStatus};
+const extractCellStatus = function(currentStatus, positions) {
+  return positions.map((position) => { return currentStatus[position[0]][position[1]] });   
+}
+
+module.exports = {initCells, modifyStatus, extractCellStatus};
 

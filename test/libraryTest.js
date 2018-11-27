@@ -1,5 +1,5 @@
 const {deepEqual} = require("assert");
-const { initCells, modifyStatus } = require("../src/library.js");
+const { extractCellStatus, initCells, modifyStatus } = require("../src/library.js");
 
 describe('initCells', function() {
   it('should return array matrix filled with D', function() {
@@ -23,5 +23,16 @@ describe('modifyStatus', function() {
     deepEqual(modifyStatus([["D","D"]],[[0,1]]),[["D","L"]]);
     deepEqual(modifyStatus([["D","D"]],[[0,0]]),[["L","D"]]);
     deepEqual(modifyStatus([["D","D"],["D","D"]],[[0,1],[1,0]]),[["D","L"],["L","D"]]);
+  });
+});
+
+describe("extractCellStatus", function() {
+  it("should extract status of given positions", function() {
+    deepEqual(extractCellStatus([["D"]],[[0,0]]), ["D"]);
+    deepEqual(extractCellStatus([["L"],["D"]],[[0,0]]), ["L"]);
+    deepEqual(extractCellStatus([["L"],["D"]],[[1,0]]), ["D"]);
+    deepEqual(extractCellStatus([["L","D"]],[[0,0]]), ["L"]);
+    deepEqual(extractCellStatus([["L","D"]],[[0,1]]), ["D"]);
+    deepEqual(extractCellStatus([["L","D"],["D","L"]],[[0,1],[1,0]]), ["D","D"]);
   });
 });
