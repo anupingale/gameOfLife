@@ -1,5 +1,5 @@
 const {deepEqual} = require("assert");
-const { initCells } = require("../src/library.js");
+const { initCells, modifyStatus } = require("../src/library.js");
 
 describe('initCells', function() {
   it('should return array matrix filled with D', function() {
@@ -13,5 +13,15 @@ describe('initCells', function() {
     deepEqual(initCells(0,1), []);
     deepEqual(initCells(1,0), [[]]);
     deepEqual(initCells(0,0), []);
+  });
+});
+
+describe('modifyStatus', function() {
+  it('should modify array status on given positions', function() {
+    deepEqual(modifyStatus([["D"]],[[0,0]]),[["L"]]);
+    deepEqual(modifyStatus([["D"],["D"]],[[0,0]]),[["L"],["D"]]);
+    deepEqual(modifyStatus([["D","D"]],[[0,1]]),[["D","L"]]);
+    deepEqual(modifyStatus([["D","D"]],[[0,0]]),[["L","D"]]);
+    deepEqual(modifyStatus([["D","D"],["D","D"]],[[0,1],[1,0]]),[["D","L"],["L","D"]]);
   });
 });
