@@ -1,39 +1,39 @@
 const {deepEqual} = require("assert");
-const { initCells, modifyStatus, extractCellStatus, extractAdjoinCells } = require("../src/library.js");
+const { initWorld, modifyStatus, extractCellStatus, extractAdjoinCells } = require("../src/library.js");
 
-describe('initCells', function() {
-  it('should return array matrix filled with D', function() {
-    deepEqual(initCells(1,1), [["D"]]); 
-    deepEqual(initCells(2,1), [["D"],["D"]]); 
-    deepEqual(initCells(1,2), [["D","D"]]); 
-    deepEqual(initCells(2,2), [["D","D"],["D","D"]]); 
+describe('initWorld', function() {
+  it('should return array matrix filled with DEAD', function() {
+    deepEqual(initWorld(1,1), [["DEAD"]]); 
+    deepEqual(initWorld(2,1), [["DEAD"],["DEAD"]]); 
+    deepEqual(initWorld(1,2), [["DEAD","DEAD"]]); 
+    deepEqual(initWorld(2,2), [["DEAD","DEAD"],["DEAD","DEAD"]]); 
   });
 
   it('should return empty array when any input is zero', function(){
-    deepEqual(initCells(0,1), []);
-    deepEqual(initCells(1,0), [[]]);
-    deepEqual(initCells(0,0), []);
+    deepEqual(initWorld(0,1), []);
+    deepEqual(initWorld(1,0), [[]]);
+    deepEqual(initWorld(0,0), []);
   });
 });
 
 describe('modifyStatus', function() {
   it('should modify array status on given positions', function() {
-    deepEqual(modifyStatus([["D"]],[[0,0]]),[["L"]]);
-    deepEqual(modifyStatus([["D"],["D"]],[[0,0]]),[["L"],["D"]]);
-    deepEqual(modifyStatus([["D","D"]],[[0,1]]),[["D","L"]]);
-    deepEqual(modifyStatus([["D","D"]],[[0,0]]),[["L","D"]]);
-    deepEqual(modifyStatus([["D","D"],["D","D"]],[[0,1],[1,0]]),[["D","L"],["L","D"]]);
+    deepEqual(modifyStatus([["DEAD"]],[[0,0]]),[["ALIVE"]]);
+    deepEqual(modifyStatus([["DEAD"],["DEAD"]],[[0,0]]),[["ALIVE"],["DEAD"]]);
+    deepEqual(modifyStatus([["DEAD","DEAD"]],[[0,1]]),[["DEAD","ALIVE"]]);
+    deepEqual(modifyStatus([["DEAD","DEAD"]],[[0,0]]),[["ALIVE","DEAD"]]);
+    deepEqual(modifyStatus([["DEAD","DEAD"],["DEAD","DEAD"]],[[0,1],[1,0]]),[["DEAD","ALIVE"],["ALIVE","DEAD"]]);
   });
 });
 
 describe("extractCellStatus", function() {
   it("should extract status of given positions", function() {
-    deepEqual(extractCellStatus([["D"]],[[0,0]]), ["D"]);
-    deepEqual(extractCellStatus([["L"],["D"]],[[0,0]]), ["L"]);
-    deepEqual(extractCellStatus([["L"],["D"]],[[1,0]]), ["D"]);
-    deepEqual(extractCellStatus([["L","D"]],[[0,0]]), ["L"]);
-    deepEqual(extractCellStatus([["L","D"]],[[0,1]]), ["D"]);
-    deepEqual(extractCellStatus([["L","D"],["D","L"]],[[0,1],[1,0]]), ["D","D"]);
+    deepEqual(extractCellStatus([["DEAD"]],[[0,0]]), ["DEAD"]);
+    deepEqual(extractCellStatus([["ALIVE"],["DEAD"]],[[0,0]]), ["ALIVE"]);
+    deepEqual(extractCellStatus([["ALIVE"],["DEAD"]],[[1,0]]), ["DEAD"]);
+    deepEqual(extractCellStatus([["ALIVE","DEAD"]],[[0,0]]), ["ALIVE"]);
+    deepEqual(extractCellStatus([["ALIVE","DEAD"]],[[0,1]]), ["DEAD"]);
+    deepEqual(extractCellStatus([["ALIVE","DEAD"],["DEAD","ALIVE"]],[[0,1],[1,0]]), ["DEAD","DEAD"]);
   });
 });
 
