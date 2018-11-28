@@ -16,7 +16,7 @@ describe("fillRow", function() {
     deepEqual(fillRow(2), ["DEAD","DEAD"]);
   });
 
-  it("should return empty array when size is not specified", function() {
+  it("should return empty array when size is 0", function() {
     deepEqual(fillRow(0), []);
   });
 });

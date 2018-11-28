@@ -53,7 +53,7 @@ describe("extractNeighbours", function() {
 });
 
 describe("isValid", function() {
-  it('should return true when neighbour is valid', function() {
+  it('should return true when input is valid', function() {
     deepEqual(isValid(2,[0,0]), true);
     deepEqual(isValid(3,[2,2]), true)
   });
@@ -63,7 +63,7 @@ describe("isValid", function() {
     deepEqual(isValid(3,[-1,0]), false);
   });
 
-  it('should return false when one of the coordinate is outside worldSize', function() {
+  it('should return false when one of the coordinate is equal to worldSize', function() {
     deepEqual(isValid(3,[3,0]), false);
     deepEqual(isValid(4,[0,4]), false);
   });
