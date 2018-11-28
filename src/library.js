@@ -1,7 +1,8 @@
-const {zipper} = require("./util.js");
+const { zipper, fillRow } = require("./util.js");
 
 const initWorld = function(row, column) {
-  return new Array(row).fill(new Array(column).fill("DEAD"));
+  let fillStatus = fillRow.bind(this,column);
+  return Array(row).fill([]).map(fillStatus);
 }
 
 const makeAlive = function(world, aliveCells) {

@@ -7,4 +7,10 @@ const zipper = function(column) {
   }
 }
 
-module.exports = {zipper};
+const fillRow = function(column) {
+  return new Array(column).fill("DEAD");
+}
+
+module.exports = {
+  zipper,
+  fillRow };
