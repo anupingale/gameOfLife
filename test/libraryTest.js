@@ -1,5 +1,5 @@
 const {deepEqual} = require("assert");
-const { initWorld, makeAlive, extractCellStatus, extractAdjoinCells } = require("../src/library.js");
+const { initWorld, makeAlive, getStatus, extractNeighbours, isValid } = require("../src/library.js");
 
 describe('initWorld', function() {
   it('should return array matrix filled with DEAD', function() {
@@ -26,23 +26,40 @@ describe('makeAlive', function() {
   });
 });
 
-describe("extractCellStatus", function() {
+describe("getStatus", function() {
   it("should extract status of given positions", function() {
-    deepEqual(extractCellStatus([["DEAD"]],[[0,0]]), ["DEAD"]);
-    deepEqual(extractCellStatus([["ALIVE"],["DEAD"]],[[0,0]]), ["ALIVE"]);
-    deepEqual(extractCellStatus([["ALIVE"],["DEAD"]],[[1,0]]), ["DEAD"]);
-    deepEqual(extractCellStatus([["ALIVE","DEAD"]],[[0,0]]), ["ALIVE"]);
-    deepEqual(extractCellStatus([["ALIVE","DEAD"]],[[0,1]]), ["DEAD"]);
-    deepEqual(extractCellStatus([["ALIVE","DEAD"],["DEAD","ALIVE"]],[[0,1],[1,0]]), ["DEAD","DEAD"]);
+    deepEqual(getStatus([["DEAD"]],[[0,0]]), ["DEAD"]);
+    deepEqual(getStatus([["ALIVE"],["DEAD"]],[[0,0]]), ["ALIVE"]);
+    deepEqual(getStatus([["ALIVE"],["DEAD"]],[[1,0]]), ["DEAD"]);
+    deepEqual(getStatus([["ALIVE","DEAD"]],[[0,0]]), ["ALIVE"]);
+    deepEqual(getStatus([["ALIVE","DEAD"]],[[0,1]]), ["DEAD"]);
+    deepEqual(getStatus([["ALIVE","DEAD"],["DEAD","ALIVE"]],[[0,1],[1,0]]), ["DEAD","DEAD"]);
   });
 });
 
-describe("extractAdjoinCells", function() {
+describe("extractNeighbours", function() {
   it('it Should return adjoin cells of given position', function() {
-    deepEqual(extractAdjoinCells([1,0]), [[0,0],[0,1],[1,1],[2,0],[2,1]]);
-    deepEqual(extractAdjoinCells([1,1]), [[0,0],[0,1],[0,2],[1,0],[1,2],[2,0],[2,1],[2,2]]);
-    deepEqual(extractAdjoinCells([0,1]), [[0,0],[0,2],[1,0],[1,1],[1,2]]);
-    deepEqual(extractAdjoinCells([0,0]), [[0,1],[1,0],[1,1]]);
-    deepEqual(extractAdjoinCells([3,0]), [[2,0],[2,1],[3,1],[4,0],[4,1]]);
+    deepEqual(extractNeighbours([1,0],2), [[0,0],[0,1],[1,1]]);
+    deepEqual(extractNeighbours([1,1],3), [[0,0],[0,1],[0,2],[1,0],[1,2],[2,0],[2,1],[2,2]]);
+    deepEqual(extractNeighbours([0,1],3), [[0,0],[0,2],[1,0],[1,1],[1,2]]);
+    deepEqual(extractNeighbours([0,0],2), [[0,1],[1,0],[1,1]]);
+    deepEqual(extractNeighbours([3,0],4), [[2,0],[2,1],[3,1]]);
+  });
+});
+
+describe("isValid", function() {
+  it('should return true when neighbour is valid', function() {
+    deepEqual(isValid(2,[0,0]), true);
+    deepEqual(isValid(3,[2,2]), true)
+  });
+
+  it('should return false when one of the co-ordinate is negative', function() {
+    deepEqual(isValid(2,[0,-1]), false);
+    deepEqual(isValid(3,[-1,0]), false);
+  });
+
+  it('should return false when one of the coordinate is outside worldSize', function() {
+    deepEqual(isValid(3,[3,0]), false);
+    deepEqual(isValid(4,[0,4]), false);
   });
 });

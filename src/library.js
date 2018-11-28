@@ -1,3 +1,5 @@
+const {zipper} = require("./util.js");
+
 const initWorld = function(row, column) {
   return new Array(row).fill(new Array(column).fill("DEAD"));
 }
@@ -7,17 +9,22 @@ const makeAlive = function(world, aliveCells) {
   return world;
 }
 
-const extractCellStatus = function(currentStatus, positions) {
-  return positions.map((position) => { return currentStatus[position[0]][position[1]] });   
+const getStatus = function(world, cells) {
+  return cells.map(cell => world[cell[0]][cell[1]]);   
 }
 
-const extractAdjoinCells = function(cellPosition){
-  let row = cellPosition[0];
-  let col = cellPosition[1];
-  let adjoinCells = [];
-  adjoinCells = [[row-1,col-1],[row-1,col],[row-1,col+1],[row,col-1],[row,col+1],[row+1,col-1],[row+1,col],[row+1,col+1]];
-  return adjoinCells.filter((element) => { return element[0] >= 0 && element[1] >= 0 });
+const isValid = function(worldSize, neighbour) {
+  return neighbour.every(element => element >= 0 && element < worldSize);
 }
 
-module.exports = {initWorld, makeAlive, extractCellStatus, extractAdjoinCells};
+const extractNeighbours = function(cell, worldSize) {
+  let row = [cell[0]-1, cell[0], cell[0]+1];
+  let column = [cell[1]-1, cell[1], cell[1]+1];
+  let zip = zipper(column);
+  let allNeighbours = row.reduce(zip, []);
+  allNeighbours.splice(4,1);
+  let validateNeighbour = isValid.bind(null, worldSize);
+  return allNeighbours.filter(validateNeighbour);
+}
 
+module.exports = { initWorld, makeAlive, getStatus, extractNeighbours, isValid };
