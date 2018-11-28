@@ -1,10 +1,5 @@
 const { zipper, fillRow } = require("./util.js");
 
-const initWorld = function(row, column) {
-  let fillStatus = fillRow.bind(this,column);
-  return Array(row).fill([]).map(fillStatus);
-}
-
 const makeAlive = function(world, aliveCells) {
   aliveCells.map(cell => world[cell[0]][cell[1]] = "ALIVE");
   return world;
@@ -36,6 +31,14 @@ const varifyRules = function(cellStatus, aliveCount) {
     return "ALIVE";
   }
   return "DEAD";
+}
+
+const initWorld = function(worldSize, aliveCells) {
+  let { topLeft, topRight } = worldSize;
+  let row = topRight[0] - topLeft[0] + 1;
+  let column = topRight[1] - topLeft[1] + 1;
+  let world = new Array(row).fill([]).map(e => new Array(column).fill("DEAD"));
+  return makeAlive(world, aliveCells);
 }
 
 

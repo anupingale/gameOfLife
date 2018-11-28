@@ -8,17 +8,10 @@ const {
   varifyRules } = require("../src/library.js");
 
 describe('initWorld', function() {
-  it('should return array matrix filled with DEAD', function() {
-    deepEqual(initWorld(1,1), [["DEAD"]]); 
-    deepEqual(initWorld(2,1), [["DEAD"],["DEAD"]]); 
-    deepEqual(initWorld(1,2), [["DEAD","DEAD"]]); 
-    deepEqual(initWorld(2,2), [["DEAD","DEAD"],["DEAD","DEAD"]]); 
-  });
-
-  it('should return empty array when any input is zero', function(){
-    deepEqual(initWorld(0,1), []);
-    deepEqual(initWorld(1,0), [[]]);
-    deepEqual(initWorld(0,0), []);
+  it('should return array having alive cells at given positions', function() {
+    deepEqual(initWorld({"topLeft" :[0,0] , "topRight" : [1,1] },[[0,0]]), [["ALIVE","DEAD"],["DEAD","DEAD"]]); 
+    deepEqual(initWorld({"topLeft" :[1,1] , "topRight" : [2,2] },[[1,1]]), [["DEAD","DEAD"],["DEAD","ALIVE"]]); 
+    deepEqual(initWorld({"topLeft" :[2,2] , "topRight" : [4,4] },[[2,2]]), [["DEAD","DEAD","DEAD"],["DEAD","DEAD","DEAD"],["DEAD","DEAD","ALIVE"]]);
   });
 });
 
@@ -78,3 +71,4 @@ describe("varifyRules", function() {
     deepEqual(varifyRules("DEAD", 3), "ALIVE");
   });
 });
+
