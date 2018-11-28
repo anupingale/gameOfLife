@@ -2,9 +2,9 @@ const initWorld = function(row, column) {
   return new Array(row).fill(new Array(column).fill("DEAD"));
 }
 
-const modifyStatus = function(currentStatus, positions){
-  positions.map((position) => { return currentStatus[position[0]][position[1]] = "ALIVE" });
-  return currentStatus;
+const makeAlive = function(world, aliveCells) {
+  aliveCells.map(cell => world[cell[0]][cell[1]] = "ALIVE");
+  return world;
 }
 
 const extractCellStatus = function(currentStatus, positions) {
@@ -19,5 +19,5 @@ const extractAdjoinCells = function(cellPosition){
   return adjoinCells.filter((element) => { return element[0] >= 0 && element[1] >= 0 });
 }
 
-module.exports = {initWorld, modifyStatus, extractCellStatus, extractAdjoinCells};
+module.exports = {initWorld, makeAlive, extractCellStatus, extractAdjoinCells};
 

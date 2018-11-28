@@ -1,5 +1,5 @@
 const {deepEqual} = require("assert");
-const { initWorld, modifyStatus, extractCellStatus, extractAdjoinCells } = require("../src/library.js");
+const { initWorld, makeAlive, extractCellStatus, extractAdjoinCells } = require("../src/library.js");
 
 describe('initWorld', function() {
   it('should return array matrix filled with DEAD', function() {
@@ -16,13 +16,13 @@ describe('initWorld', function() {
   });
 });
 
-describe('modifyStatus', function() {
+describe('makeAlive', function() {
   it('should modify array status on given positions', function() {
-    deepEqual(modifyStatus([["DEAD"]],[[0,0]]),[["ALIVE"]]);
-    deepEqual(modifyStatus([["DEAD"],["DEAD"]],[[0,0]]),[["ALIVE"],["DEAD"]]);
-    deepEqual(modifyStatus([["DEAD","DEAD"]],[[0,1]]),[["DEAD","ALIVE"]]);
-    deepEqual(modifyStatus([["DEAD","DEAD"]],[[0,0]]),[["ALIVE","DEAD"]]);
-    deepEqual(modifyStatus([["DEAD","DEAD"],["DEAD","DEAD"]],[[0,1],[1,0]]),[["DEAD","ALIVE"],["ALIVE","DEAD"]]);
+    deepEqual(makeAlive([["DEAD"]],[[0,0]]),[["ALIVE"]]);
+    deepEqual(makeAlive([["DEAD"],["DEAD"]],[[0,0]]),[["ALIVE"],["DEAD"]]);
+    deepEqual(makeAlive([["DEAD","DEAD"]],[[0,1]]),[["DEAD","ALIVE"]]);
+    deepEqual(makeAlive([["DEAD","DEAD"]],[[0,0]]),[["ALIVE","DEAD"]]);
+    deepEqual(makeAlive([["DEAD","DEAD"],["DEAD","DEAD"]],[[0,1],[1,0]]),[["DEAD","ALIVE"],["ALIVE","DEAD"]]);
   });
 });
 
