@@ -4,7 +4,8 @@ const {
   makeAlive, 
   getStatus, 
   extractNeighbours, 
-  isValid } = require("../src/library.js");
+  isValid,
+  varifyRules } = require("../src/library.js");
 
 describe('initWorld', function() {
   it('should return array matrix filled with DEAD', function() {
@@ -66,5 +67,15 @@ describe("isValid", function() {
   it('should return false when one of the coordinate is equal to worldSize', function() {
     deepEqual(isValid(3,[3,0]), false);
     deepEqual(isValid(4,[0,4]), false);
+  });
+});
+
+describe("varifyRules", function() {
+  it("should return DEAD or ALIVE according to rule", function() {
+    deepEqual(varifyRules("ALIVE", 0), "DEAD");
+    deepEqual(varifyRules("ALIVE", 4), "DEAD");
+    deepEqual(varifyRules("ALIVE", 2), "ALIVE");
+    deepEqual(varifyRules("ALIVE", 3), "ALIVE");
+    deepEqual(varifyRules("DEAD", 3), "ALIVE");
   });
 });

@@ -28,9 +28,21 @@ const extractNeighbours = function(cell, worldSize) {
   return allNeighbours.filter(validateNeighbour);
 }
 
+const varifyRules = function(cellStatus, aliveCount) {
+  let rule1 = cellStatus == "ALIVE" && aliveCount < 2 || aliveCount > 3;
+  let rule2 = cellStatus == "ALIVE" && aliveCount == 2 || aliveCount == 3;
+  let rule3 = cellStatus == "DEAD" && aliveCount == 3;
+  if(rule2 || rule3) {
+    return "ALIVE";
+  }
+  return "DEAD";
+}
+
+
 module.exports = { 
   initWorld, 
   makeAlive, 
   getStatus, 
   extractNeighbours, 
-  isValid };
+  isValid,
+  varifyRules };
