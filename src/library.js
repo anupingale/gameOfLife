@@ -27,4 +27,9 @@ const extractNeighbours = function(cell, worldSize) {
   return allNeighbours.filter(validateNeighbour);
 }
 
-module.exports = { initWorld, makeAlive, getStatus, extractNeighbours, isValid };
+module.exports = { 
+  initWorld, 
+  makeAlive, 
+  getStatus, 
+  extractNeighbours, 
+  isValid };

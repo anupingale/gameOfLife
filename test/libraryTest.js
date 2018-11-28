@@ -1,5 +1,10 @@
 const {deepEqual} = require("assert");
-const { initWorld, makeAlive, getStatus, extractNeighbours, isValid } = require("../src/library.js");
+const { 
+  initWorld, 
+  makeAlive, 
+  getStatus, 
+  extractNeighbours, 
+  isValid } = require("../src/library.js");
 
 describe('initWorld', function() {
   it('should return array matrix filled with DEAD', function() {
