@@ -45,28 +45,27 @@ describe("getStatus", function() {
 
 describe("extractNeighbours", function() {
   it('it Should return adjoin cells of given position', function() {
-    deepEqual(extractNeighbours([1,0],2), [[0,0],[0,1],[1,1]]);
-    deepEqual(extractNeighbours([1,1],3), [[0,0],[0,1],[0,2],[1,0],[1,2],[2,0],[2,1],[2,2]]);
-    deepEqual(extractNeighbours([0,1],3), [[0,0],[0,2],[1,0],[1,1],[1,2]]);
-    deepEqual(extractNeighbours([0,0],2), [[0,1],[1,0],[1,1]]);
-    deepEqual(extractNeighbours([3,0],4), [[2,0],[2,1],[3,1]]);
+    deepEqual(extractNeighbours([1,0],{ "topLeft" : [0,0], "topRight" : [1,1] }), [[0,0],[0,1],[1,1]]);
+    deepEqual(extractNeighbours([1,1],{ "topLeft" : [0,0], "topRight" : [3,3] }), [[0,0],[0,1],[0,2],[1,0],[1,2],[2,0],[2,1],[2,2]]);
+    deepEqual(extractNeighbours([1,2],{ "topLeft" : [1,1], "topRight" : [3,3] }), [[1,1],[1,3],[2,1],[2,2],[2,3]]);
+    deepEqual(extractNeighbours([2,2],{ "topLeft" : [1,1], "topRight" : [2,2] }), [[1,1],[1,2],[2,1]]);
   });
 });
 
 describe("isValid", function() {
   it('should return true when input is valid', function() {
-    deepEqual(isValid(2,[0,0]), true);
-    deepEqual(isValid(3,[2,2]), true)
+    deepEqual(isValid({"topLeft" :[0,0], "topRight" :[3,3]},[0,1]), true);
+    deepEqual(isValid({"topLeft" :[0,0], "topRight" :[3,3]},[1,0]), true);
   });
 
   it('should return false when one of the co-ordinate is negative', function() {
-    deepEqual(isValid(2,[0,-1]), false);
-    deepEqual(isValid(3,[-1,0]), false);
+    deepEqual(isValid({"topLeft" :[0,0], "topRight" :[3,3]},[0,-1]), false);
+    deepEqual(isValid({"topLeft" :[0,0], "topRight" :[3,3]},[-1,1]), false);
   });
 
-  it('should return false when one of the coordinate is equal to worldSize', function() {
-    deepEqual(isValid(3,[3,0]), false);
-    deepEqual(isValid(4,[0,4]), false);
+  it('should return false when one of the coordinate is greater than worldSize', function() {
+    deepEqual(isValid({"topLeft" :[0,0], "topRight" :[3,3]},[0,4]), false);
+    deepEqual(isValid({"topLeft" :[0,0], "topRight" :[3,3]},[4,0]), false);
   });
 });
 

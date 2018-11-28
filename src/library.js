@@ -15,7 +15,7 @@ const getStatus = function(world, cells) {
 }
 
 const isValid = function(worldSize, neighbour) {
-  return neighbour.every(element => element >= 0 && element < worldSize);
+  return neighbour.every(element => element >= worldSize["topLeft"][0] && element <= worldSize["topRight"][1]);
 }
 
 const extractNeighbours = function(cell, worldSize) {
