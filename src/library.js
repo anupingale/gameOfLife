@@ -1,14 +1,5 @@
 const { zipper, fillRow } = require("./util.js");
 
-const makeAlive = function(world, aliveCells) {
-  aliveCells.map(cell => world[cell[0]][cell[1]] = "ALIVE");
-  return world;
-}
-
-const getStatus = function(world, cells) {
-  return cells.map(cell => world[cell[0]][cell[1]]);   
-}
-
 const isValid = function(worldSize, neighbour) {
   return neighbour.every(element => element >= worldSize["topLeft"][0] && element <= worldSize["topRight"][1]);
 }
@@ -33,19 +24,7 @@ const varifyRules = function(cellStatus, aliveCount) {
   return "DEAD";
 }
 
-const initWorld = function(worldSize, aliveCells) {
-  let { topLeft, topRight } = worldSize;
-  let row = topRight[0] - topLeft[0] + 1;
-  let column = topRight[1] - topLeft[1] + 1;
-  let world = new Array(row).fill([]).map(e => new Array(column).fill("DEAD"));
-  return makeAlive(world, aliveCells);
-}
-
-
 module.exports = { 
-  initWorld, 
-  makeAlive, 
-  getStatus, 
   extractNeighbours, 
   isValid,
   varifyRules };

@@ -1,40 +1,8 @@
 const {deepEqual} = require("assert");
 const { 
-  initWorld, 
-  makeAlive, 
-  getStatus, 
   extractNeighbours, 
   isValid,
   varifyRules } = require("../src/library.js");
-
-describe('initWorld', function() {
-  it('should return array having alive cells at given positions', function() {
-    deepEqual(initWorld({"topLeft" :[0,0] , "topRight" : [1,1] },[[0,0]]), [["ALIVE","DEAD"],["DEAD","DEAD"]]); 
-    deepEqual(initWorld({"topLeft" :[1,1] , "topRight" : [2,2] },[[1,1]]), [["DEAD","DEAD"],["DEAD","ALIVE"]]); 
-    deepEqual(initWorld({"topLeft" :[2,2] , "topRight" : [4,4] },[[2,2]]), [["DEAD","DEAD","DEAD"],["DEAD","DEAD","DEAD"],["DEAD","DEAD","ALIVE"]]);
-  });
-});
-
-describe('makeAlive', function() {
-  it('should modify array status on given positions', function() {
-    deepEqual(makeAlive([["DEAD"]],[[0,0]]),[["ALIVE"]]);
-    deepEqual(makeAlive([["DEAD"],["DEAD"]],[[0,0]]),[["ALIVE"],["DEAD"]]);
-    deepEqual(makeAlive([["DEAD","DEAD"]],[[0,1]]),[["DEAD","ALIVE"]]);
-    deepEqual(makeAlive([["DEAD","DEAD"]],[[0,0]]),[["ALIVE","DEAD"]]);
-    deepEqual(makeAlive([["DEAD","DEAD"],["DEAD","DEAD"]],[[0,1],[1,0]]),[["DEAD","ALIVE"],["ALIVE","DEAD"]]);
-  });
-});
-
-describe("getStatus", function() {
-  it("should extract status of given positions", function() {
-    deepEqual(getStatus([["DEAD"]],[[0,0]]), ["DEAD"]);
-    deepEqual(getStatus([["ALIVE"],["DEAD"]],[[0,0]]), ["ALIVE"]);
-    deepEqual(getStatus([["ALIVE"],["DEAD"]],[[1,0]]), ["DEAD"]);
-    deepEqual(getStatus([["ALIVE","DEAD"]],[[0,0]]), ["ALIVE"]);
-    deepEqual(getStatus([["ALIVE","DEAD"]],[[0,1]]), ["DEAD"]);
-    deepEqual(getStatus([["ALIVE","DEAD"],["DEAD","ALIVE"]],[[0,1],[1,0]]), ["DEAD","DEAD"]);
-  });
-});
 
 describe("extractNeighbours", function() {
   it('it Should return adjoin cells of given position', function() {
