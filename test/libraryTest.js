@@ -58,4 +58,3 @@ describe("varifyRules", function() {
     deepEqual(varifyRules("DEAD", 3), "ALIVE");
   });
 });
-

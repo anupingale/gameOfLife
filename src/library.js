@@ -1,4 +1,4 @@
-const { zipper, fillRow } = require("./util.js");
+const { zipper, fillRow, isAlive } = require("./util.js");
 
 const isValid = function(worldSize, neighbour) {
   return neighbour.every(element => element >= worldSize["topLeft"][0] && element <= worldSize["topRight"][1]);
