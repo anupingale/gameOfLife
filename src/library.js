@@ -14,6 +14,17 @@ const extractNeighbours = function(cell, worldSize) {
   return allNeighbours.filter(validateNeighbour);
 }
 
+const extractAllNeighbours = function(bound){
+  let {topLeft, topRight} = bound;
+  let allNeighbours = {}
+  for (let row = topLeft[0]; row <= topRight[0];row++) {
+    for (let column = topLeft[1]; column <= topRight[1];column++) {
+      allNeighbours["["+row+","+column+"]"] = extractNeighbours([row,column],bound); 
+    }
+  }
+  return allNeighbours;
+}
+
 const varifyRules = function(cellStatus, aliveCount) {
   let rule1 = cellStatus == "ALIVE" && aliveCount < 2 || aliveCount > 3;
   let rule2 = cellStatus == "ALIVE" && aliveCount == 2 || aliveCount == 3;
@@ -26,5 +37,6 @@ const varifyRules = function(cellStatus, aliveCount) {
 
 module.exports = { 
   extractNeighbours, 
+  extractAllNeighbours,
   isValid,
   varifyRules };

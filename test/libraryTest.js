@@ -1,6 +1,7 @@
 const {deepEqual} = require("assert");
 const { 
   extractNeighbours, 
+  extractAllNeighbours,
   isValid,
   varifyRules } = require("../src/library.js");
 
@@ -12,6 +13,24 @@ describe("extractNeighbours", function() {
     deepEqual(extractNeighbours([2,2],{ "topLeft" : [1,1], "topRight" : [2,2] }), [[1,1],[1,2],[2,1]]);
   });
 });
+
+describe("extractAllNeighbours", function(){
+  it("should return object containing cells as keys and valid neighbours as value", function(){
+    let output = { '[0,0]': [ [ 0, 1 ], [ 1, 0 ], [ 1, 1 ] ],
+      '[0,1]': [ [ 0, 0 ], [ 1, 0 ], [ 1, 1 ] ],
+      '[1,0]': [ [ 0, 0 ], [ 0, 1 ], [ 1, 1 ] ],
+      '[1,1]': [ [ 0, 0 ], [ 0, 1 ], [ 1, 0 ] ] }; 
+    deepEqual(extractAllNeighbours({"topLeft" : [0,0], "topRight" : [1,1]}),output);
+    output = { '[1,1]': [ [ 1, 2 ], [ 2, 1 ], [ 2, 2 ] ],
+      '[1,2]': [ [ 1, 1 ], [ 1, 3 ], [ 2, 1 ], [ 2, 2 ], [ 2, 3 ] ],
+      '[1,3]': [ [ 1, 2 ], [ 2, 2 ], [ 2, 3 ] ],
+      '[2,1]': [ [ 1, 1 ], [ 1, 2 ], [ 2, 2 ], [ 3, 1 ], [ 3, 2 ] ],
+      '[2,2]':[ [ 1, 1 ],[ 1, 2 ],[ 1, 3 ],[ 2, 1 ],[ 2, 3 ],[ 3, 1 ],[ 3, 2 ],[ 3, 3 ] ],
+      '[2,3]': [ [ 1, 2 ], [ 1, 3 ], [ 2, 2 ], [ 3, 2 ], [ 3, 3 ] ] }
+    deepEqual(extractAllNeighbours({"topLeft" : [1,1], "topRight" : [2,3]}),output);
+  });
+});
+
 
 describe("isValid", function() {
   it('should return true when input is valid', function() {
